@@ -19,6 +19,7 @@ const Header = (props) => (
                     <li key={i} className="item">
                         <Link
                             to="/rocket"
+                            //  to={`/rocket/${item.replace(' ', '_')}`}
                             onClick={() => {
                                 props.changeRocket(item);
                             }}

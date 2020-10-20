@@ -3,7 +3,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
-import Main from './components/Main/Main';
 import Features from './components/Features/Features';
 import Footer from './components/Footer/Footer';
 
@@ -30,7 +29,6 @@ class App extends React.Component {
     this.updateCompany();
   }
 
-
   updateRocket() {
     this.fetchData.getRocket()
       .then(data => {
@@ -52,31 +50,30 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
     return (
       <BrowserRouter>
         <Header rockets={this.state.rockets} changeRocket={this.changeRocket} />
 
-        <Route exact path='/'>
-          {this.state.company && <Home company={this.state.company} />}
-        </Route>
-
-        <Route path='/rocket'>
-          <Main rocket={this.state.rocket} />
-          {this.state.rocketFeatures &&
+        <Route exact
+          path='/'
+          render={() => this.state.company &&
+            <Home company={this.state.company} />}
+        />
+        <Route
+          path='/rocket'
+          render={() => this.state.rocketFeatures &&
             <Features {...this.state.rocketFeatures} />}
-        </Route>
+        />
+        {/* <Route
+          path='/rocket/:nameRocket'
+          render={({ match }) => this.state.rocketFeatures &&
+            <Features {...this.state.rocketFeatures} match={match} />}
+        /> */}
+        <Route path='/calendar' component={Calendar} />
+        <Route path='/details/:id' component={Details} />
 
-        <Route path='/calendar'>
-          <Calendar />
-        </Route>
-
-        <Route path='/details'>
-          <Details />
-        </Route>
-
-        {this.state.company && <Footer {...this.state.company} />}
-      </BrowserRouter>
+        { this.state.company && <Footer {...this.state.company} />}
+      </BrowserRouter >
     );
   };
 }
